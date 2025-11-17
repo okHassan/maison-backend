@@ -25,18 +25,20 @@ const PORT = process.env.PORT || 9000;
 
 connectDB();
 
+import cors from "cors";
+
 const corsOptions = {
     origin: (origin, callback) => {
+        console.log("Incoming origin:", origin);
+
         const allowedOrigins = [
             'http://192.168.98.73:5173',
             'http://localhost:5173',
             'https://maison-frontend-eta.vercel.app',
-            process.env.FRONTEND_URL,
         ];
 
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
-            console.log("allowedOrigin :", origin)
         } else {
             callback(new Error('Not allowed by CORS'));
         }
@@ -46,9 +48,11 @@ const corsOptions = {
     credentials: true,
 };
 
+// ⭐ must handle preflight
+app.options('*', cors(corsOptions));
+
+// ⭐ apply cors
 app.use(cors(corsOptions));
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
