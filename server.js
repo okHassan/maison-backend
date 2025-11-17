@@ -25,8 +25,6 @@ const PORT = process.env.PORT || 9000;
 
 connectDB();
 
-import cors from "cors";
-
 const corsOptions = {
     origin: "*", // allow ALL domains
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
